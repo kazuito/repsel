@@ -12,7 +12,8 @@ export function activate(context: vscode.ExtensionContext) {
 
       if (
         editor &&
-        editor.selection.start.character === editor.selection.end.character
+        editor.selection.start.character === editor.selection.end.character &&
+        editor.selection.start.line === editor.selection.end.line
       ) {
         vscode.window.showWarningMessage("Selection not found. - Repsel");
       } else if (editor) {
