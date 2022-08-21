@@ -6,11 +6,24 @@
   "engines": {
     "vscode": "^1.70.0"
   },
+  "publisher": "kazuito",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kazuito/repsel.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kazuito/repsel/issues"
+  },
+  "keywords": [
+    "replace",
+    "selection"
+  ],
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "main": "./out/extension.js",
   "contributes": {
