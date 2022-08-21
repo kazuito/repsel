@@ -1,12 +1,16 @@
 {
   "name": "repsel",
   "displayName": "Repsel",
-  "description": "Replace in Selection",
+  "description": "Replace within a Selection",
   "version": "1.0.2",
   "engines": {
     "vscode": "^1.70.0"
   },
   "publisher": "kazuito",
+  "galleryBanner": {
+    "color": "#576472",
+    "theme": "light"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/kazuito/repsel.git"
