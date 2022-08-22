@@ -17,12 +17,8 @@ export function activate(context: vscode.ExtensionContext) {
         editor.selection.start.line === editor.selection.end.line
       ) {
         vscode.window.showWarningMessage("Selection not found. - Repsel");
+        return;
       } else if (editor) {
-        const textSelectionRange = new vscode.Range(
-          editor.selection.start,
-          editor.selection.end
-        );
-
         const queryTarget = await vscode.window.showInputBox({
           placeHolder: "",
           prompt: "Target text",
@@ -30,14 +26,12 @@ export function activate(context: vscode.ExtensionContext) {
         });
 
         const doc = editor.document;
-        const selectedText = doc.getText(textSelectionRange);
         const targetRegExp = new RegExp(queryTarget ? queryTarget : "", "g");
 
         if (queryTarget === "") {
-          vscode.window.showWarningMessage("Enter the target first - Repsel");
-          return;
-        } else if (selectedText.match(targetRegExp) === null) {
-          vscode.window.showWarningMessage("Target not found. - Repsel");
+          vscode.window.showWarningMessage(
+            "Enter the target word first - Repsel"
+          );
           return;
         }
 
@@ -46,34 +40,50 @@ export function activate(context: vscode.ExtensionContext) {
           backgroundColor: userConfig.highlightColor,
         });
         var decorationTargets: vscode.DecorationOptions[] = [];
-        var matches = selectedText.match(targetRegExp);
-        console.log(matches);
+        var selectedTexts: Array<string> = [];
+        var selectedRanges: Array<vscode.Range> = [];
 
-        var selectionStartOffset = doc.offsetAt(editor.selection.start);
+        for (let i = 0; i < editor.selections.length; i++) {
+          let selectionRange = new vscode.Range(
+            editor.selections[i].start,
+            editor.selections[i].end
+          );
+          selectedRanges.push(selectionRange);
 
-        var searchStartPos = 0;
-        if (matches) {
-          for (let i = 0; i < matches.length; i++) {
-            let searchArea = selectedText.slice(searchStartPos);
-            let wordPos = searchArea.search(targetRegExp);
-            let word = matches[i];
+          let selectedText = doc.getText(selectionRange);
+          selectedTexts.push(selectedText);
 
-            let range = new vscode.Range(
-              doc.positionAt(selectionStartOffset + searchStartPos + wordPos),
-              doc.positionAt(
-                selectionStartOffset + searchStartPos + wordPos + word.length
-              )
-            );
+          let matches = selectedText.match(targetRegExp);
+          console.log(matches);
 
-            searchStartPos += wordPos + word.length;
+          let selectionStartOffset = doc.offsetAt(editor.selections[i].start);
 
-            decorationTargets.push({
-              range,
-            });
+          let searchStartPos = 0;
+          if (matches) {
+            for (let j = 0; j < matches.length; j++) {
+              let searchArea = selectedText.slice(searchStartPos);
+              let wordPos = searchArea.search(targetRegExp);
+              let word = matches[j];
+
+              let range = new vscode.Range(
+                doc.positionAt(selectionStartOffset + searchStartPos + wordPos),
+                doc.positionAt(
+                  selectionStartOffset + searchStartPos + wordPos + word.length
+                )
+              );
+
+              searchStartPos += wordPos + word.length;
+              decorationTargets.push({
+                range,
+              });
+            }
           }
+          if (decorationTargets.length === 0) {
+            vscode.window.showWarningMessage("Target not found. - Repsel");
+            return;
+          }
+          editor.setDecorations(decorationType, decorationTargets);
         }
-
-        editor.setDecorations(decorationType, decorationTargets);
         /* Highlighting - end */
 
         const queryNew = await vscode.window.showInputBox({
@@ -84,18 +94,23 @@ export function activate(context: vscode.ExtensionContext) {
 
         decorationType.dispose();
 
-        const replacedText = selectedText.replace(
-          targetRegExp,
-          queryNew ? queryNew : queryTarget ? queryTarget : ""
-        );
+        var replacedTexts: Array<string> = [];
 
-        editor.edit(function (editBuilder) {
-          editBuilder.replace(textSelectionRange, replacedText);
+        for (let i = 0; i < editor.selections.length; i++) {
+          let replacedText = selectedTexts[i].replace(
+            targetRegExp,
+            queryNew ? queryNew : queryTarget ? queryTarget : ""
+          );
+          replacedTexts.push(replacedText);
+        }
+        await editor.edit(function (editBuilder) {
+          for (let i = 0; i < replacedTexts.length; i++) {
+            editBuilder.replace(selectedRanges[i], replacedTexts[i]);
+          }
         });
       }
     }
   );
-
   context.subscriptions.push(replaceInSelection);
 }
 
