@@ -33,6 +33,14 @@ export function activate(context: vscode.ExtensionContext) {
         const selectedText = doc.getText(textSelectionRange);
         const targetRegExp = new RegExp(queryTarget ? queryTarget : "", "g");
 
+        if (queryTarget === "") {
+          vscode.window.showWarningMessage("Enter the target first - Repsel");
+          return;
+        } else if (selectedText.match(targetRegExp) === null) {
+          vscode.window.showWarningMessage("Target not found. - Repsel");
+          return;
+        }
+
         /* Highlighting - begin */
         const decorationType = vscode.window.createTextEditorDecorationType({
           backgroundColor: userConfig.highlightColor,
