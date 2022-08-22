@@ -32,6 +32,16 @@
   "icon": "icon.png",
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "Repsel",
+      "properties": {
+        "repsel.highlightColor": {
+          "type": "string",
+          "default": "green",
+          "description": "Background color for the highlighted words.\nYou can use CSS colors or Hex color."
+        }
+      }
+    },
     "commands": [
       {
         "command": "repsel.replaceInSelection",

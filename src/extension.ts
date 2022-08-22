@@ -3,11 +3,12 @@ import * as vscode from "vscode";
 export function activate(context: vscode.ExtensionContext) {
   /* Debug */
   console.log('"Repsel" is now active!');
-  vscode.window.showInformationMessage('"Repsel" is now active!');
+  // vscode.window.showInformationMessage('"Repsel" is now active!');
 
   let replaceInSelection = vscode.commands.registerCommand(
     "repsel.replaceInSelection",
     async () => {
+      const userConfig = vscode.workspace.getConfiguration("repsel");
       const editor = vscode.window.activeTextEditor;
 
       if (
@@ -34,7 +35,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         /* Highlighting - begin */
         const decorationType = vscode.window.createTextEditorDecorationType({
-          backgroundColor: "green",
+          backgroundColor: userConfig.highlightColor,
         });
         var decorationTargets: vscode.DecorationOptions[] = [];
         var matches = selectedText.match(targetRegExp);
@@ -77,7 +78,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         const replacedText = selectedText.replace(
           targetRegExp,
-          queryNew ? queryNew : ""
+          queryNew ? queryNew : queryTarget ? queryTarget : ""
         );
 
         editor.edit(function (editBuilder) {
