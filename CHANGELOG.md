@@ -6,6 +6,8 @@ All notable changes to the "Repsel" extension will be documented in this file.
 
 ## [Unreleased]
 
+- Enabled to replace words with empty.
+
 ## [1.0.4]
 
 - Support multiple selection.
