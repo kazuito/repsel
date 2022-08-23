@@ -39,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
       });
 
       const doc = editor.document;
-      const targetRegExp = new RegExp(queryTarget ? queryTarget : "", "g");
+      const targetRegExp = new RegExp(queryTarget ? queryTarget : "", userConfig.regexpFlags);
 
       console.log(queryTarget);
 

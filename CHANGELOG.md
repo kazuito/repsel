@@ -7,6 +7,7 @@ All notable changes to the "Repsel" extension will be documented in this file.
 ## [Unreleased]
 
 - Support multiple selection.
+- New setting `regexpFlags`.
 
 ## [1.0.3]
 

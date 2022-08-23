@@ -39,6 +39,11 @@
           "type": "string",
           "default": "green",
           "description": "Background color for the highlighted words.\nYou can use CSS colors or Hex color."
+        },
+        "repsel.regexpFlags": {
+          "type": "string",
+          "default": "g",
+          "description": "Flags used in regular expression to search target words."
         }
       }
     },
