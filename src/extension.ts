@@ -39,7 +39,10 @@ export function activate(context: vscode.ExtensionContext) {
       });
 
       const doc = editor.document;
-      const targetRegExp = new RegExp(queryTarget ? queryTarget : "", userConfig.regexpFlags);
+      const targetRegExp = new RegExp(
+        queryTarget ? queryTarget : "",
+        userConfig.regexpFlags
+      );
 
       console.log(queryTarget);
 
@@ -109,15 +112,16 @@ export function activate(context: vscode.ExtensionContext) {
         value: "",
       });
 
+      if (queryNew === undefined) {
+        return;
+      }
+
       decorationType.dispose();
 
       var replacedTexts: Array<string> = [];
 
       for (let i = 0; i < editor.selections.length; i++) {
-        let replacedText = selectedTexts[i].replace(
-          targetRegExp,
-          queryNew ? queryNew : queryTarget ? queryTarget : ""
-        );
+        let replacedText = selectedTexts[i].replace(targetRegExp, queryNew);
         replacedTexts.push(replacedText);
       }
       await editor.edit(function (editBuilder) {
