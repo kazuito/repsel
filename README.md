@@ -12,6 +12,7 @@ Quickly replace only words within a selection.
 
 ## Settings
 
-Name|description|type|default|example
+Name|Description|Type|Default|Example
 -|-|-|-|-
 highlightColor|Background color for highlighted words.<br>You can use CSS colors or Hex color.|string|`green`|`red`<br>`#ff0000`
+regexpFlags|Flags used in regular expression to search target words.<br>[Lean about flags - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)|string|`g`|`igm`
