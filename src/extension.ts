@@ -112,11 +112,11 @@ export function activate(context: vscode.ExtensionContext) {
         value: "",
       });
 
+      decorationType.dispose();
+
       if (queryNew === undefined) {
         return;
       }
-
-      decorationType.dispose();
 
       var replacedTexts: Array<string> = [];
 
