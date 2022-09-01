@@ -7,10 +7,6 @@
     "vscode": "^1.70.0"
   },
   "publisher": "kazuito",
-  "galleryBanner": {
-    "color": "#576472",
-    "theme": "light"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/kazuito/vscode-repsel.git"
