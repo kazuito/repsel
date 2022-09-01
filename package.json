@@ -13,11 +13,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kazuito/repsel.git"
+    "url": "https://github.com/kazuito/vscode-repsel.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kazuito/repsel/issues"
+    "url": "https://github.com/kazuito/vscode-repsel/issues"
   },
   "keywords": [
     "replace",
