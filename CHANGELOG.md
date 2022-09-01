@@ -6,6 +6,8 @@ All notable changes to the "Repsel" extension will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.5]
+
 - Enabled to replace words with empty.
 - Fixed a bug that left highlights.
 
